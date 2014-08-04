@@ -1,4 +1,5 @@
 *.userprefs
+*.suo
 tilde/bin
 tilde/obj
 packages/*
