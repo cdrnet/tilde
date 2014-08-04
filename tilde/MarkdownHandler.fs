@@ -9,8 +9,7 @@ open System.Reflection
 open System.Text.RegularExpressions
 
 type MarkdownHandler () = 
-    let fsharpCompiler = Assembly.Load("FSharp.Compiler")
-    let formattingAgent = CodeFormat.CreateAgent(fsharpCompiler)
+    let formattingAgent = CodeFormat.CreateAgent()
     
     member private x.ReadBlocks input = 
         let rgx = new Regex("(?<!\ )\[(.*?)=(.*?)\]")
@@ -62,7 +61,7 @@ type MarkdownHandler () =
                                 let addcss = if showlinenums = "true" then "linenums:1" else ""
                                 sprintf "<pre class='prettyprint %s language-%s'>%s</pre>" addcss lang 
                                     (Html.htmlEncode(code))
-                        HtmlBlock(codeblock)
+                        InlineBlock(codeblock)
                     | _ as ex -> ex
         ]
         MarkdownDocument(paragraphs, md.DefinedLinks)
